@@ -20,17 +20,18 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td> @item.KategoriNavn</td>
-            <td>@item.bedrifter.Count</td>
-    
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Rediger</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Detaljer</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Slett</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td> @item.KategoriNavn</td>
+                <td>@item.Bedrifter.Count</td>
+
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Rediger</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Detaljer</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Slett</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

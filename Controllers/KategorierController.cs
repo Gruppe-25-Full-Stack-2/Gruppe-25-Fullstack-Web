@@ -22,7 +22,7 @@ namespace TSD2491Gruppe25.Web.Controllers
         // GET: Kategorier
         public async Task<IActionResult> Index()
         {
-            var kategorier = await _context.Kategorier.Include(k => k.bedrifter).ToListAsync();
+            var kategorier = await _context.Kategorier.Include(k => k.Bedrifter).ToListAsync();
             return View(kategorier);
         }
 

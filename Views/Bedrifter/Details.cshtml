@@ -50,11 +50,11 @@
             @Html.DisplayNameFor(model => model.Kategori)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Kategori.KategoriNavn)
+            @(Model.Kategori?.KategoriNavn)
         </dd>
     </dl>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Endre</a> |
-    <a asp-action="Index">Tilbake til listen</a>
+<div class="mt-3">
+    <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-warning me-2">Endre</a>
+    <a asp-action="Index" class="btn btn-secondary">Tilbake til listen</a>
 </div>
