@@ -22,8 +22,11 @@ namespace TSD2491Gruppe25.Web.Controllers
         // GET: Bedrifter
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Bedrifter.Include(b => b.Kategori);
-            return View(await applicationDbContext.ToListAsync());
+            var bedrifter = await _context.Bedrifter
+            .Include(b => b.Kategori)
+            .ToListAsync();
+
+            return View(bedrifter);
         }
 
         // GET: Bedrifter/Details/5
