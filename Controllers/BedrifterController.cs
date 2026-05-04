@@ -10,23 +10,23 @@ using TSD2491Gruppe25.Web.Models;
 
 namespace TSD2491Gruppe25.Web.Controllers
 {
-    public class BedriftController : Controller
+    public class BedrifterController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public BedriftController(ApplicationDbContext context)
+        public BedrifterController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Bedrift
+        // GET: Bedrifter
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Bedrifter.Include(b => b.Kategori);
             return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Bedrift/Details/5
+        // GET: Bedrifter/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -45,14 +45,14 @@ namespace TSD2491Gruppe25.Web.Controllers
             return View(bedrift);
         }
 
-        // GET: Bedrift/Create
+        // GET: Bedrifter/Create
         public IActionResult Create()
         {
             ViewData["KategoriId"] = new SelectList(_context.Kategorier, "Id", "KategoriNavn");
             return View();
         }
 
-        // POST: Bedrift/Create
+        // POST: Bedrifter/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -69,7 +69,7 @@ namespace TSD2491Gruppe25.Web.Controllers
             return View(bedrift);
         }
 
-        // GET: Bedrift/Edit/5
+        // GET: Bedrifter/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -86,7 +86,7 @@ namespace TSD2491Gruppe25.Web.Controllers
             return View(bedrift);
         }
 
-        // POST: Bedrift/Edit/5
+        // POST: Bedrifter/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -122,7 +122,7 @@ namespace TSD2491Gruppe25.Web.Controllers
             return View(bedrift);
         }
 
-        // GET: Bedrift/Delete/5
+        // GET: Bedrifter/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -141,7 +141,7 @@ namespace TSD2491Gruppe25.Web.Controllers
             return View(bedrift);
         }
 
-        // POST: Bedrift/Delete/5
+        // POST: Bedrifter/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
