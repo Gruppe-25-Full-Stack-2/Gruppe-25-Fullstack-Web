@@ -16,8 +16,9 @@
                 <input asp-for="KategoriNavn" class="form-control" />
                 <span asp-validation-for="KategoriNavn" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Lag ny" class="btn btn-primary" />
+            <div class="form-group mt-1">
+                <input type="submit" value="Opprett" class="btn btn-primary me-2" />
+                <a asp-action="Index" class="btn btn-secondary">Tilbake til listen</a>
             </div>
         </form>
     </div>
