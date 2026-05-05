@@ -127,6 +127,7 @@ namespace TSD2491Gruppe25.Web.Controllers
             }
 
             var kategori = await _context.Kategorier
+                .Include(k => k.Bedrifter)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (kategori == null)
             {

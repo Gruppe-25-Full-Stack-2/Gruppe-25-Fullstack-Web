@@ -6,7 +6,6 @@
 
 <h1>Rediger</h1>
 
-<h4>Kategori</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -14,7 +13,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
-                <label asp-for="KategoriNavn" class="control-label"></label>
+                <label asp-for="KategoriNavn" class="control-label">Kategori</label>
                 <input asp-for="KategoriNavn" class="form-control" />
                 <span asp-validation-for="KategoriNavn" class="text-danger"></span>
             </div>
