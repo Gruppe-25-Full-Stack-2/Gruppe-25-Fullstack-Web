@@ -10,3 +10,6 @@
   Brukeren opprettes av `BrukerInitialiserer` i `Data/`. Endre `DefaultEmail` og
   `DefaultPassword` der hvis dere vil ha en annen standardbruker. Nye brukere
   kan også registreres via `/Identity/Account/Register`.
+
+  Sider merket med `[Authorize]` krever innlogging.
+
