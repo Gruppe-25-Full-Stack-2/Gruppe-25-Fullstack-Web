@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TSD2491Gruppe25.Web.Data;
 using TSD2491Gruppe25.Web.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TSD2491Gruppe25.Web.Controllers
 {
@@ -20,6 +21,7 @@ namespace TSD2491Gruppe25.Web.Controllers
         }
 
         // GET: Bedrifter
+        [AllowAnonymous]
         public async Task<IActionResult> Index(int? kategoriId)
         {
             var query = _context.Bedrifter.Include(b => b.Kategori).AsQueryable();
@@ -37,6 +39,7 @@ namespace TSD2491Gruppe25.Web.Controllers
 
 
         // GET: Bedrifter/Details/5
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -56,6 +59,7 @@ namespace TSD2491Gruppe25.Web.Controllers
         }
 
         // GET: Bedrifter/Create
+        [AllowAnonymous]
         public IActionResult Create()
         {
             ViewData["KategoriId"] = new SelectList(_context.Kategorier, "Id", "KategoriNavn");
@@ -65,6 +69,7 @@ namespace TSD2491Gruppe25.Web.Controllers
         // POST: Bedrifter/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [AllowAnonymous]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Organisasjonsnummer,Navn,Organisasjonsform,ErAktiv,Registreringsdato,Notat,KategoriId")] Bedrift bedrift)
@@ -86,6 +91,7 @@ namespace TSD2491Gruppe25.Web.Controllers
         }
 
         // GET: Bedrifter/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -105,6 +111,7 @@ namespace TSD2491Gruppe25.Web.Controllers
         // POST: Bedrifter/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id,
@@ -149,6 +156,7 @@ namespace TSD2491Gruppe25.Web.Controllers
         }
 
         // GET: Bedrifter/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -168,6 +176,7 @@ namespace TSD2491Gruppe25.Web.Controllers
         }
 
         // POST: Bedrifter/Delete/5
+        [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TSD2491Gruppe25.Web.Data;
 using TSD2491Gruppe25.Web.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TSD2491Gruppe25.Web.Controllers
 {
@@ -20,6 +21,7 @@ namespace TSD2491Gruppe25.Web.Controllers
         }
 
         // GET: Kategorier
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             var kategorier = await _context.Kategorier.Include(k => k.Bedrifter).ToListAsync();
@@ -27,6 +29,7 @@ namespace TSD2491Gruppe25.Web.Controllers
         }
 
         // GET: Kategorier/Details/5
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -46,6 +49,7 @@ namespace TSD2491Gruppe25.Web.Controllers
         }
 
         // GET: Kategorier/Create
+        [AllowAnonymous]
         public IActionResult Create()
         {
             return View();
@@ -54,6 +58,7 @@ namespace TSD2491Gruppe25.Web.Controllers
         // POST: Kategorier/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [AllowAnonymous]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,KategoriNavn")] Kategori kategori)
@@ -68,6 +73,7 @@ namespace TSD2491Gruppe25.Web.Controllers
         }
 
         // GET: Kategorier/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -86,6 +92,7 @@ namespace TSD2491Gruppe25.Web.Controllers
         // POST: Kategorier/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,KategoriNavn")] Kategori kategori)
@@ -119,6 +126,7 @@ namespace TSD2491Gruppe25.Web.Controllers
         }
 
         // GET: Kategorier/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -138,6 +146,7 @@ namespace TSD2491Gruppe25.Web.Controllers
         }
 
         // POST: Kategorier/Delete/5
+        [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
