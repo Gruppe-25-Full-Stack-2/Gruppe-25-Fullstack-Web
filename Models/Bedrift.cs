@@ -17,8 +17,11 @@ public class Bedrift
     [StringLength(100)]
     public string? Organisasjonsform { get; set; }
 
+    [Display(Name = "Aktiv")]
     public bool ErAktiv { get; set; }
 
+    [DataType(DataType.Date)]
+    [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = false)]
     public DateTime? Registreringsdato { get; set; }
 
     [StringLength(500)]

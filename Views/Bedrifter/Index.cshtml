@@ -22,7 +22,7 @@
                 @Html.DisplayNameFor(model => model.Organisasjonsform)
             </th>
             <th>
-                Aktiv
+                Status
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Registreringsdato)
@@ -50,8 +50,16 @@
                     @Html.DisplayFor(modelItem => item.Organisasjonsform)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ErAktiv)
+                    @if (item.ErAktiv)
+                    {
+                        <span class="badge bg-success">Aktiv</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary">Inaktiv</span>
+                    }
                 </td>
+
                 <td>
                     @Html.DisplayFor(modelItem => item.Registreringsdato)
                 </td>
