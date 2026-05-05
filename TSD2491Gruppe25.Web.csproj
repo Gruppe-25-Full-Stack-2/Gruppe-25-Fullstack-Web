@@ -34,5 +34,10 @@
    />
       <Exec Command="npm run build:css" ContinueOnError="WarnAndContinue" />
     </Target>
-
+<ItemGroup>
+      <Compile Remove="Tests/**" />
+      <Content Remove="Tests/**" />
+      <None Remove="Tests/**" />
+      <EmbeddedResource Remove="Tests/**" />
+    </ItemGroup>
   </Project>
