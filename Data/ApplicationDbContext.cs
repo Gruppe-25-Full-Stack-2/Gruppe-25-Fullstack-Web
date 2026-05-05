@@ -8,4 +8,12 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
 {
     public DbSet<Bedrift> Bedrifter => Set<Bedrift>();
     public DbSet<Kategori> Kategorier => Set<Kategori>();
+
+    protected override void OnModelCreating(ModelBuilder builder)
+    {
+        base.OnModelCreating(builder);
+        builder.Entity<Bedrift>()
+            .HasIndex(b => b.Organisasjonsnummer)
+            .IsUnique();
+    }
 }

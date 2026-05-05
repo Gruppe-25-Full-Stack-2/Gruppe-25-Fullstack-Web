@@ -6,9 +6,17 @@
 
 <h1>Bedrifter</h1>
 
-<p>
+<div class="d-flex align-items-center mb-3">
     <a asp-action="Create" class="btn btn-success">Ny bedrift</a>
-</p>
+
+    <form asp-action="Index" method="get" class="d-flex align-items-center ms-auto">
+        <label for="kategoriId" class="form-label mb-0 me-2">Filtrer på kategori:</label>
+        <select name="kategoriId" id="kategoriId" class="form-select" asp-items="ViewBag.KategoriFilter"
+                onchange="this.form.submit()">
+            <option value="">Alle</option>
+        </select>
+    </form>
+</div>
 <table class="table">
     <thead>
         <tr>

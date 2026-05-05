@@ -20,14 +20,21 @@ namespace TSD2491Gruppe25.Web.Controllers
         }
 
         // GET: Bedrifter
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? kategoriId)
         {
-            var bedrifter = await _context.Bedrifter
-            .Include(b => b.Kategori)
-            .ToListAsync();
+            var query = _context.Bedrifter.Include(b => b.Kategori).AsQueryable();
 
-            return View(bedrifter);
+            if (kategoriId.HasValue)
+            {
+                query = query.Where(b => b.KategoriId == kategoriId.Value);
+            }
+
+            ViewBag.KategoriFilter = new SelectList(
+                await _context.Kategorier.ToListAsync(), "Id", "KategoriNavn", kategoriId);
+
+            return View(await query.ToListAsync());
         }
+
 
         // GET: Bedrifter/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -62,6 +69,12 @@ namespace TSD2491Gruppe25.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Organisasjonsnummer,Navn,Organisasjonsform,ErAktiv,Registreringsdato,Notat,KategoriId")] Bedrift bedrift)
         {
+            if (await _context.Bedrifter.AnyAsync(b => b.Organisasjonsnummer == bedrift.Organisasjonsnummer))
+            {
+                ModelState.AddModelError(nameof(bedrift.Organisasjonsnummer),
+                    "Organisasjonsnummeret er allerede registrert.");
+            }
+
             if (ModelState.IsValid)
             {
                 _context.Add(bedrift);
@@ -94,11 +107,20 @@ namespace TSD2491Gruppe25.Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Organisasjonsnummer,Navn,Organisasjonsform,ErAktiv,Registreringsdato,Notat,KategoriId")] Bedrift bedrift)
+        public async Task<IActionResult> Edit(int id,
+         [Bind("Id,Organisasjonsnummer,Navn,Organisasjonsform,ErAktiv,Registreringsdato,Notat,KategoriId")]
+  Bedrift bedrift)
         {
             if (id != bedrift.Id)
             {
                 return NotFound();
+            }
+
+            if (await _context.Bedrifter.AnyAsync(b => b.Organisasjonsnummer == bedrift.Organisasjonsnummer
+        && b.Id != bedrift.Id))
+            {
+                ModelState.AddModelError(nameof(bedrift.Organisasjonsnummer),
+                    "Organisasjonsnummeret er allerede registrert på en annen bedrift.");
             }
 
             if (ModelState.IsValid)
@@ -121,7 +143,8 @@ namespace TSD2491Gruppe25.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["KategoriId"] = new SelectList(_context.Kategorier, "Id", "KategoriNavn", bedrift.KategoriId);
+            ViewData["KategoriId"] = new SelectList(_context.Kategorier, "Id", "KategoriNavn",
+        bedrift.KategoriId);
             return View(bedrift);
         }
 
