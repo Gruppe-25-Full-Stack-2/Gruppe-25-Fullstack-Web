@@ -1,0 +1,88 @@
+@model IEnumerable<TSD2491Gruppe25.Web.Models.Bedrift>
+
+@{
+    ViewData["Title"] = "Bedrifter";
+}
+
+<h1>Bedrifter</h1>
+
+<div class="d-flex align-items-center mb-3">
+    <a asp-action="Create" class="btn btn-success">Ny bedrift</a>
+
+    <form asp-action="Index" method="get" class="d-flex align-items-center ms-auto">
+        <label for="kategoriId" class="form-label mb-0 me-2">Filtrer på kategori:</label>
+        <select name="kategoriId" id="kategoriId" class="form-select" asp-items="ViewBag.KategoriFilter"
+                onchange="this.form.submit()">
+            <option value="">Alle</option>
+        </select>
+    </form>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Organisasjonsnummer)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Navn)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Organisasjonsform)
+            </th>
+            <th>
+                Status
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Registreringsdato)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Notat)
+            </th>
+            <th>
+                Kategori
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Organisasjonsnummer)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Navn)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Organisasjonsform)
+                </td>
+                <td>
+                    @if (item.ErAktiv)
+                    {
+                        <span class="badge bg-success">Aktiv</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary">Inaktiv</span>
+                    }
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Registreringsdato)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Notat)
+                </td>
+                <td>
+                    @item.Kategori?.KategoriNavn
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm me-1">Rediger</a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info btn-sm me-1">Detaljer</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Slett</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

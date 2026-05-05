@@ -1,0 +1,35 @@
+@model IEnumerable<TSD2491Gruppe25.Web.Models.Kategori>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Kategorier</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-success">Ny kategori</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Kategori</th>
+            <th>Antall bedrifter</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td> @item.KategoriNavn</td>
+                <td>@item.Bedrifter.Count</td>
+
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm me-1">Rediger</a> 
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info btn-sm me-1">Detaljer</a> 
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Slett</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TSD2491Gruppe25.Web.Data;
 
@@ -10,9 +11,11 @@ using TSD2491Gruppe25.Web.Data;
 namespace TSD2491Gruppe25.Web.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260504131359_AddBedriftOgKategori")]
+    partial class AddBedriftOgKategori
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "10.0.2");
@@ -250,9 +253,6 @@ namespace TSD2491Gruppe25.Web.Data.Migrations
 
                     b.HasIndex("KategoriId");
 
-                    b.HasIndex("Organisasjonsnummer")
-                        .IsUnique();
-
                     b.ToTable("Bedrifter");
                 });
 
@@ -326,7 +326,7 @@ namespace TSD2491Gruppe25.Web.Data.Migrations
             modelBuilder.Entity("TSD2491Gruppe25.Web.Models.Bedrift", b =>
                 {
                     b.HasOne("TSD2491Gruppe25.Web.Models.Kategori", "Kategori")
-                        .WithMany("Bedrifter")
+                        .WithMany("bedrifter")
                         .HasForeignKey("KategoriId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -336,7 +336,7 @@ namespace TSD2491Gruppe25.Web.Data.Migrations
 
             modelBuilder.Entity("TSD2491Gruppe25.Web.Models.Kategori", b =>
                 {
-                    b.Navigation("Bedrifter");
+                    b.Navigation("bedrifter");
                 });
 #pragma warning restore 612, 618
         }

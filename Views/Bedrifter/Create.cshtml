@@ -1,0 +1,62 @@
+@model TSD2491Gruppe25.Web.Models.Bedrift
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Legg til bedrift</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Organisasjonsnummer" class="control-label"></label>
+                <input asp-for="Organisasjonsnummer" class="form-control" />
+                <span asp-validation-for="Organisasjonsnummer" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Navn" class="control-label"></label>
+                <input asp-for="Navn" class="form-control" />
+                <span asp-validation-for="Navn" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Organisasjonsform" class="control-label"></label>
+                <input asp-for="Organisasjonsform" class="form-control" />
+                <span asp-validation-for="Organisasjonsform" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="ErAktiv" /> Aktiv
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="Registreringsdato" class="control-label"></label>
+                <input asp-for="Registreringsdato" class="form-control" />
+                <span asp-validation-for="Registreringsdato" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Notat" class="control-label"></label>
+                <input asp-for="Notat" class="form-control" />
+                <span asp-validation-for="Notat" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="KategoriId" class="control-label">Kategori</label>
+                <select asp-for="KategoriId" class="form-control" asp-items="ViewBag.KategoriId"></select>
+            </div>
+            <div class="form-group mt-3">
+                <input type="submit" value="Opprett" class="btn btn-primary me-2" />
+                <a asp-action="Index" class="btn btn-secondary">Tilbake til listen</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
