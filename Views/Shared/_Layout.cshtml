@@ -19,34 +19,21 @@
                     <div class="flex items-center space-x-12">
                         <a asp-area="" asp-controller="Home" asp-action="Index" class="text-xl font-semibold hover:text-gray-600">TSD2491Gruppe25.Web</a>
 
-                        <div class="flex items-center space-x-8">
-                            <a asp-controller="Home" asp-action="Index" class="hover:text-gray-600">Hjem</a>
-                            <a asp-controller="Kategorier" asp-action="Index" class="hover:text-gray-600">Kategorier</a>
-                            <a asp-controller="Bedrifter" asp-action="Index" class="hover:text-gray-600">Bedrifter</a>
+                        <div class="flex items-center space-x-10">
+                            <a asp-controller="Home" asp-action="Index" class="hover:text-gray-900">Hjem</a>
+                            <a asp-controller="Kategorier" asp-action="Index" class="hover:text-gray-900">Kategorier</a>
+                            <a asp-controller="Bedrifter" asp-action="Index" class="hover:text-gray-900">Bedrifter</a>
                         </div>
                     </div>
 
                     <div class="flex items-center">
                         <partial name="_LoginPartial" />
                     </div>
-
-
-                    <button id="mobileMenuBtn" class="md:hidden text-gray-600 hover:text-white focus:outline-none">
-                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        </svg>
-                    </button>
                 </div>
-            </div>
-
-            <div id="mobileMenu" class="md:hidden hidden px-4 pb-4 space-y-2 bg-gray-700">
-                <a asp-controller="Home" asp-action="Index" class="block hover:text-gray-300">Hjem</a>
-                <a asp-controller="Kategorier" asp-action="Index" class="block hover:text-gray-300">Kategorier</a>
-                <a asp-controller="Bedrifter" asp-action="Index" class="block hover:text-gray-300">Bedrifter</a>
-                <partial name="_LoginPartial" />   
             </div>
         </nav>
     </header>
+
     <div class="max-w-7xl mx-auto px-4 py-6">
         <main role="main">
             @RenderBody()
@@ -61,14 +48,6 @@
 
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script> 
-
-    <script>
-        document.getElementById("mobileMenuBtn").addEventListener("click", () => 
-        {
-            const menu = document.getElementById("mobileMenu");
-            menu.classList.toggle("hidden");
-        });
-    </script>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>
