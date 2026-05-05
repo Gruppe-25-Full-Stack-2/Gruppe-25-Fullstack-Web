@@ -22,6 +22,8 @@ builder.Services.AddHttpClient<BrregImportService>(client =>
 
 var app = builder.Build();
 
+await BrukerInitialiserer.SeedAsync(app.Services);
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
