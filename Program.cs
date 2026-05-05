@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using TSD2491Gruppe25.Web.Data;
+using TSD2491Gruppe25.Web.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +14,11 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddHttpClient<BrregImportService>(client =>
+{
+    client.BaseAddress = new Uri("https://data.brreg.no/enhetsregisteret/");
+});
 
 var app = builder.Build();
 
@@ -46,4 +52,3 @@ app.MapRazorPages()
    .WithStaticAssets();
 
 app.Run();
-
