@@ -4,56 +4,78 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Rediger</h1>
+<h1 class="text-3xl font-bold mb-6">Rediger</h1>
 
-<h4>Bedrift</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="Organisasjonsnummer" class="control-label"></label>
-                <input asp-for="Organisasjonsnummer" class="form-control" />
-                <span asp-validation-for="Organisasjonsnummer" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Navn" class="control-label"></label>
-                <input asp-for="Navn" class="form-control" />
-                <span asp-validation-for="Navn" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Organisasjonsform" class="control-label"></label>
-                <input asp-for="Organisasjonsform" class="form-control" />
-                <span asp-validation-for="Organisasjonsform" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="ErAktiv" /> Aktiv
-                </label>
-            </div>
-            <div class="form-group">
-                <label asp-for="Registreringsdato" class="control-label"></label>
-                <input asp-for="Registreringsdato" class="form-control" />
-                <span asp-validation-for="Registreringsdato" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Notat" class="control-label"></label>
-                <input asp-for="Notat" class="form-control" />
-                <span asp-validation-for="Notat" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="KategoriId" class="control-label"></label>
-                <select asp-for="KategoriId" class="form-control" asp-items="ViewBag.KategoriId"></select>
-                <span asp-validation-for="KategoriId" class="text-danger"></span>
-            </div>
-            <div class="form-group mt-3">
-                <input type="submit" value="Lagre" class="btn btn-primary me-2" />
-                <a asp-action="Index" class="btn btn-secondary">Tilbake til listen</a>
-            </div>
-        </form>
-    </div>
+<h4 class="text-xl font-semibold mb-4">Bedrift</h4>
+<hr class="mb-6" />
+
+<div class="max-w-xl">
+    <form asp-action="Edit" method="post" class="space-y-4">
+        <div asp-validation-summary="ModelOnly" class="text-red-600 text-sm"></div>
+
+        <input type="hidden" asp-for="Id" />
+
+        <div>
+            <label asp-for="Organisasjonsnummer" class="block font-medium mb-1"></label>
+            <input asp-for="Organisasjonsnummer"
+                   class="w-full border border-gray-300 rounded px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            <span asp-validation-for="Organisasjonsnummer" class="text-red-600 text-sm"></span>
+        </div>
+
+        <div>
+            <label asp-for="Navn" class="block font-medium mb-1"></label>
+            <input asp-for="Navn"
+                   class="w-full border border-gray-300 rounded px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            <span asp-validation-for="Navn" class="text-red-600 text-sm"></span>
+        </div>
+
+        <div>
+            <label asp-for="Organisasjonsform" class="block font-medium mb-1"></label>
+            <input asp-for="Organisasjonsform"
+                   class="w-full border border-gray-300 rounded px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            <span asp-validation-for="Organisasjonsform" class="text-red-600 text-sm"></span>
+        </div>
+
+        <div class="flex items-center gap-2">
+            <input asp-for="ErAktiv"
+                   class="h-4 w-4 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500" />
+            <label asp-for="ErAktiv" class="font-medium">Aktiv</label>
+        </div>
+
+        <div>
+            <label asp-for="Registreringsdato" class="block font-medium mb-1"></label>
+            <input asp-for="Registreringsdato"
+                   class="w-full border border-gray-300 rounded px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            <span asp-validation-for="Registreringsdato" class="text-red-600 text-sm"></span>
+        </div>
+
+        <div>
+            <label asp-for="Notat" class="block font-medium mb-1"></label>
+            <input asp-for="Notat"
+                   class="w-full border border-gray-300 rounded px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            <span asp-validation-for="Notat" class="text-red-600 text-sm"></span>
+        </div>
+
+        <div>
+            <label asp-for="KategoriId" class="block font-medium mb-1"></label>
+            <select asp-for="KategoriId"
+                    asp-items="ViewBag.KategoriId"
+                    class="w-full border border-gray-300 rounded px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </select>
+            <span asp-validation-for="KategoriId" class="text-red-600 text-sm"></span>
+        </div>
+
+        <div class="flex items-center gap-3 pt-3">
+            <input type="submit"
+                   value="Lagre"
+                   class="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 font-medium cursor-pointer" />
+
+            <a asp-action="Index"
+               class="inline-block px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 font-medium">
+                Tilbake til listen
+            </a>
+        </div>
+    </form>
 </div>
 
 @section Scripts {
