@@ -4,21 +4,20 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Legg til kategori</h1>
+<h1 class="text-2xl font-bold mb-4"> Legg til kategori</h1>
 
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
+<hr class="mb-6" />
+<div class="max-w-md mx-auto">   
+    <form asp-action="Create" class="space-y-4">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="KategoriNavn" class="control-label"></label>
-                <input asp-for="KategoriNavn" class="form-control" />
-                <span asp-validation-for="KategoriNavn" class="text-danger"></span>
+            <div>
+                <label asp-for="KategoriNavn" class="block font-medium mb-1"></label>
+                <input asp-for="KategoriNavn" class="border border-gray-300 rounded px-3 py-2 w-full focus:outline-none focus:ring focus:ring-blue-300" />
+                <span asp-validation-for="KategoriNavn" class="text-red-600 text-sm"></span>
             </div>
-            <div class="form-group mt-1">
-                <input type="submit" value="Opprett" class="btn btn-primary me-2" />
-                <a asp-action="Index" class="btn btn-secondary">Tilbake til listen</a>
+            <div class="flex gap-3 pt-2">
+                <input type="submit" value="Opprett" class="bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-2 rounded cursor-pointer" />
+                <a asp-action="Index" class="bg-gray-500 hover:bg-gray-600 text-white font-medium px-4 py-2 rounded">Tilbake til listen</a>
             </div>
         </form>
     </div>

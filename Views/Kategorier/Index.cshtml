@@ -4,30 +4,32 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Kategorier</h1>
+<h1 class="text-2xl font-bold mb-4">Kategorier</h1>
 
-<p>
-    <a asp-action="Create" class="btn btn-success">Ny kategori</a>
+<p class="mb-4">
+    <a asp-action="Create" class="bg-green-600 hover:bg-green-700 text-white font-medium px-4 py-2 rounded">Ny kategori</a>
 </p>
-<table class="table">
-    <thead>
+
+<table class="min-w-full border border-gray-300 rounded-lg overflow-hidden">
+    <thead class="bg-gray-100 border-b border-gray-300">
         <tr>
-            <th>Kategori</th>
-            <th>Antall bedrifter</th>
-            <th></th>
+            <th class="text-left px-4 py-2 font-semibold">Kategori</th>
+            <th class="text-left px-4 py-2 font-semibold">Antall bedrifter</th>
+            <th class="px-4 py-2"></th>
         </tr>
     </thead>
+
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td> @item.KategoriNavn</td>
-                <td>@item.Bedrifter.Count</td>
+            <tr class="border-b hover:bg-gray-50">
+                <td class="px-4 py-2"> @item.KategoriNavn</td>
+                <td class="px-4 py-2">@item.Bedrifter.Count</td>
 
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm me-1">Rediger</a> 
-                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info btn-sm me-1">Detaljer</a> 
-                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Slett</a>
+                <td class="px-4 py-2 flex gap-2">
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded text-sm">Rediger</a> 
+                    <a asp-action="Details" asp-route-id="@item.Id" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm"">Detaljer</a> 
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-sm">Slett</a>
                 </td>
             </tr>
         }
