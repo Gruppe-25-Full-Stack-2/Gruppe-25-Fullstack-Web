@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TSD2491Gruppe25.Web.csproj" />
+    <ProjectReference Include="..\Web\TSD2491Gruppe25.Web.csproj" />
   </ItemGroup>
 
 </Project>
