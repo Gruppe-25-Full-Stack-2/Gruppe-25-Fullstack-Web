@@ -4,55 +4,72 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - TSD2491Gruppe25.Web</title>
+
     <script type="importmap"></script>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/tailwind.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/TSD2491Gruppe25.Web.styles.css" asp-append-version="true" />
 </head>
-<body>
+<body class="bg-gray-100 text-gray-900">
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">TSD2491Gruppe25.Web</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Hjem</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Kategorier" asp-action="Index">
-                                Kategorier
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Bedrifter" asp-action="Index">
-                                Bedrifter
-                            </a>
-                        </li>
-                    </ul>
-                    <partial name="_LoginPartial" />
+        <nav class="bg-white text-black shadow">
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="flex items-center justify-between h-16">
+                    
+                    <div class="flex items-center space-x-12">
+                        <a asp-area="" asp-controller="Home" asp-action="Index" class="text-xl font-semibold hover:text-gray-600">TSD2491Gruppe25.Web</a>
+
+                        <div class="flex items-center space-x-8">
+                            <a asp-controller="Home" asp-action="Index" class="hover:text-gray-600">Hjem</a>
+                            <a asp-controller="Kategorier" asp-action="Index" class="hover:text-gray-600">Kategorier</a>
+                            <a asp-controller="Bedrifter" asp-action="Index" class="hover:text-gray-600">Bedrifter</a>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center">
+                        <partial name="_LoginPartial" />
+                    </div>
+
+
+                    <button id="mobileMenuBtn" class="md:hidden text-gray-600 hover:text-white focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
                 </div>
+            </div>
+
+            <div id="mobileMenu" class="md:hidden hidden px-4 pb-4 space-y-2 bg-gray-700">
+                <a asp-controller="Home" asp-action="Index" class="block hover:text-gray-300">Hjem</a>
+                <a asp-controller="Kategorier" asp-action="Index" class="block hover:text-gray-300">Kategorier</a>
+                <a asp-controller="Bedrifter" asp-action="Index" class="block hover:text-gray-300">Bedrifter</a>
+                <partial name="_LoginPartial" />   
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+    <div class="max-w-7xl mx-auto px-4 py-6">
+        <main role="main">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2026 - TSD2491Gruppe25.Web <a asp-area="" asp-controller="Home"></a>
+    <footer class="bg-gray-800 text-gray-300 py-4 mt-10">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            &copy; 2026 - TSD2491Gruppe25.Web
         </div>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script> 
+
+    <script>
+        document.getElementById("mobileMenuBtn").addEventListener("click", () => 
+        {
+            const menu = document.getElementById("mobileMenu");
+            menu.classList.toggle("hidden");
+        });
+    </script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
