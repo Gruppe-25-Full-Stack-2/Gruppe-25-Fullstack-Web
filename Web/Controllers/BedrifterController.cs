@@ -11,6 +11,9 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace TSD2491Gruppe25.Web.Controllers
 {
+    /// <summary>
+    /// Håndterer CRUD for Bedrift og tillater filtrering på Kategori
+    /// </summary>
     public class BedrifterController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -20,7 +23,14 @@ namespace TSD2491Gruppe25.Web.Controllers
             _context = context;
         }
 
-        // GET: Bedrifter
+        /// <summary>
+        /// Viser liste over alle berifter.
+        /// Tillater også å sortere på Kategori
+        /// </summary>
+        /// <param name="kategoriId">
+        /// Hvis denne er satt vises kun bedrifter med denne kategoriId
+        /// </param>
+        /// <returns>Returnerer en liste med bedrifter</returns>
         [AllowAnonymous]
         public async Task<IActionResult> Index(int? kategoriId)
         {
@@ -38,7 +48,11 @@ namespace TSD2491Gruppe25.Web.Controllers
         }
 
 
-        // GET: Bedrifter/Details/5
+        /// <summary>
+        /// Viser detaljer for en valgt bedrift.
+        /// </summary>
+        /// <param name="id">Bedriftens Id</param>
+        /// <returns>Viser et View av bedrift, eller NotFound ved manglende Id</returns>
         [AllowAnonymous]
         public async Task<IActionResult> Details(int? id)
         {
@@ -58,7 +72,10 @@ namespace TSD2491Gruppe25.Web.Controllers
             return View(bedrift);
         }
 
-        // GET: Bedrifter/Create
+        /// <summary>
+        ///  Viser skjema som tillater å opprette en bedrift
+        /// </summary>
+        /// <returns>Returnerer et View</returns>
         [AllowAnonymous]
         public IActionResult Create()
         {
@@ -66,9 +83,12 @@ namespace TSD2491Gruppe25.Web.Controllers
             return View();
         }
 
-        // POST: Bedrifter/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// Oppretter en bedrift i databasen.
+        /// Feiler hvis organisasjonsnummeret finnes i databasen allerede
+        /// </summary>
+        /// <param name="bedrift">Bedriften som skal opprettes</param>
+        /// <returns>Vellyket kjøring returneres det til index. Ved feil returneres det tilbake i et view</returns>
         [AllowAnonymous]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -90,7 +110,12 @@ namespace TSD2491Gruppe25.Web.Controllers
             return View(bedrift);
         }
 
-        // GET: Bedrifter/Edit/5
+
+        /// <summary>
+        /// Viser skjema for redigering av bedrift
+        /// </summary>
+        /// <param name="id">Bedriftens Id</param>
+        /// <returns>Returnerer et view, eller feil hvis l</returns>
         [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -108,9 +133,12 @@ namespace TSD2491Gruppe25.Web.Controllers
             return View(bedrift);
         }
 
-        // POST: Bedrifter/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// Lagrer endringer for en gitt bedrift.
+        /// </summary>
+        /// <param name="id"> Bedriften som skal endres. Må være lik bedrift</param>
+        /// <param name="bedrift">Oppdaterer den valgte bedriften</param>
+        /// <returns>Returneres til Index ved vellyket endring, ved feil returneres det i et view</returns>
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -155,7 +183,11 @@ namespace TSD2491Gruppe25.Web.Controllers
             return View(bedrift);
         }
 
-        // GET: Bedrifter/Delete/5
+        /// <summary>
+        /// Viser skjema for bekreftelse om bedriften skal slettes
+        /// </summary>
+        /// <param name="id">Id tilhørende bedriften som skal slettes</param>
+        /// <returns>View med bedriften</returns>
         [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
@@ -175,7 +207,11 @@ namespace TSD2491Gruppe25.Web.Controllers
             return View(bedrift);
         }
 
-        // POST: Bedrifter/Delete/5
+        /// <summary>
+        /// Sletter bedriften fra databasen.
+        /// </summary>
+        /// <param name="id">Id til bedriften som slettes</param>
+        /// <returns>returneres til Index</returns>
         [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

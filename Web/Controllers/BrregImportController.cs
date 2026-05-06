@@ -6,7 +6,10 @@ using TSD2491Gruppe25.Web.Services;
 using TSD2491Gruppe25.Web.ViewModels;
 
 namespace TSD2491Gruppe25.Web.Controllers;
-
+/// <summary>
+/// Tillater søk opp mot Brønnøysundregisteret ved bruk av API og legger bedriftene som blir funnet til i databasen.
+/// Denne Controlleren håndterer input-validering og gir tilbakemelding, også ved feil i søket.
+/// </summary>
 public class BrregImportController : Controller
 {
     private readonly ApplicationDbContext _context;
@@ -20,6 +23,10 @@ public class BrregImportController : Controller
         _brregImportService = brregImportService;
     }
 
+    /// <summary>
+    /// Viser et søkeskjema. Det søkes i bedriftnavn og det tas ikke hensyn til forskjell i store/små bokstaver
+    /// </summary>
+    /// <returns>Returnerer et view</returns>
     [HttpGet]
     public async Task<IActionResult> Index()
     {
@@ -30,7 +37,12 @@ public class BrregImportController : Controller
 
         return View(vm);
     }
-
+    /// <summary>
+    /// Utfører API-søk mot Brreg. Det sjekkes for at kategori finnes og det gis tilbakemelding på om det er ingen treff.
+    /// Det er satt en begrensning til maks 20 treff.
+    /// </summary>
+    /// <param name="vm">vm er kategorien det skal knyttes opp mot og søkeordet det skal søkes etter i Brreg</param>
+    /// <returns>Ved vellyket kjøring returneres antall bedrifter som ble lagt til. Det returneres feil i view hvis kategori ikke finnes, eller brreg ikke er tilgjengelig</returns>
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Index(BrregImportViewModel vm)
