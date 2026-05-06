@@ -31,6 +31,9 @@ public class KategoriTest
         var resultat = await controller.Create(kategori);
 
         Assert.Equal(1, db.Kategorier.Count());
+
+        var redirect = Assert.IsType<RedirectToActionResult>(resultat);
+        Assert.Equal("Index", redirect.ActionName);
         
     }
 
@@ -50,10 +53,12 @@ public class KategoriTest
 
         kategori.KategoriNavn = "OppdatertKategori";
 
-        await controller.Edit(kategori.Id, kategori);
+        var result = await controller.Edit(kategori.Id, kategori);
 
         Assert.Equal("OppdatertKategori", db.Kategorier.First().KategoriNavn);
         
+        var redirect = Assert.IsType<RedirectToActionResult>(result);
+        Assert.Equal("Index", redirect.ActionName);
     }
 
     [Fact]
@@ -74,7 +79,9 @@ public class KategoriTest
     
         Assert.NotNull(result);
         Assert.IsType<Kategori>(result.Model);
-        
+
+        var model = Assert.IsType<Kategori>(result.Model);
+        Assert.Equal(kategori.Id, model.Id);
     }
 
     [Fact]
@@ -91,10 +98,12 @@ public class KategoriTest
         db.Kategorier.Add(kategori);
         db.SaveChanges();
 
-        await controller.DeleteConfirmed(kategori.Id);
+        var result = await controller.DeleteConfirmed(kategori.Id);
 
         Assert.Equal(0, db.Kategorier.Count());
-        
+
+        var redirect = Assert.IsType<RedirectToActionResult>(result);
+        Assert.Equal("Index", redirect.ActionName);
     }
     
 }
