@@ -3,33 +3,52 @@ using TSD2491Gruppe25.Web.Controllers;
 using TSD2491Gruppe25.Web.Data;
 using TSD2491Gruppe25.Web.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Identity.Client;
 
 namespace TSD2491Gruppe25.Web.Tests;
 
 public class BedriftTest
 {
-    private ApplicationDbContext GetDb()
+    private static ApplicationDbContext GetDb()
     {
         var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-            .UseInMemoryDatabase(Guid.NewGuid().ToString()) 
+            .UseInMemoryDatabase(Guid.NewGuid().ToString())
             .Options;
 
         return new ApplicationDbContext(options);
     }
+
+    private static Kategori SeedKategori(ApplicationDbContext db, string navn = "TestKategori")
+    {
+        var kategori = new Kategori { KategoriNavn = navn };
+        db.Kategorier.Add(kategori);
+        db.SaveChanges();
+        return kategori;
+    }
+
+    private static Bedrift SeedBedrift(
+      ApplicationDbContext db,
+      int kategoriId,
+      string orgnr = "123456789",
+      string navn = "TestBedrift")
+    {
+        var bedrift = new Bedrift
+        {
+            Organisasjonsnummer = orgnr,
+            Navn = navn,
+            KategoriId = kategoriId
+        };
+        db.Bedrifter.Add(bedrift);
+        db.SaveChanges();
+        return bedrift;
+    }
+
 
     [Fact]
     public async Task CreateBedriftTest()
     {
         var db = GetDb();
         var controller = new BedrifterController(db);
-
-        var kategori = new Kategori 
-        { 
-            KategoriNavn = "TestKategori" 
-        };
-        db.Kategorier.Add(kategori);
-        db.SaveChanges();
+        var kategori = SeedKategori(db);
 
         var bedrift = new Bedrift
         {
@@ -53,22 +72,8 @@ public class BedriftTest
         var db = GetDb();
         var controller = new BedrifterController(db);
 
-        var kategori = new Kategori 
-        { 
-            KategoriNavn = "TestKategori" 
-        };
-        db.Kategorier.Add(kategori);
-        db.SaveChanges();
-
-        var bedrift = new Bedrift
-        {
-            Organisasjonsnummer = "123456789",
-            Navn = "TestBedrift",
-            KategoriId = kategori.Id
-        };
-
-        db.Bedrifter.Add(bedrift);
-        db.SaveChanges();
+        var kategori = SeedKategori(db);
+        var bedrift = SeedBedrift(db, kategori.Id);
 
         bedrift.Navn = "OppdatertBedrift";
 
@@ -83,22 +88,8 @@ public class BedriftTest
         var db = GetDb();
         var controller = new BedrifterController(db);
 
-        var kategori = new Kategori 
-        { 
-            KategoriNavn = "TestKategori" 
-        };
-        db.Kategorier.Add(kategori);
-        db.SaveChanges();
-
-        var bedrift = new Bedrift
-        {
-            Organisasjonsnummer = "123456789",
-            Navn = "TestBedrift",
-            KategoriId = kategori.Id
-        };
-
-        db.Bedrifter.Add(bedrift);
-        db.SaveChanges();
+        var kategori = SeedKategori(db);
+        var bedrift = SeedBedrift(db, kategori.Id);
 
         var result = await controller.Details(bedrift.Id) as ViewResult;
 
@@ -112,22 +103,8 @@ public class BedriftTest
         var db = GetDb();
         var controller = new BedrifterController(db);
 
-        var kategori = new Kategori 
-        { 
-            KategoriNavn = "TestKategori" 
-        };
-        db.Kategorier.Add(kategori);
-        db.SaveChanges();
-
-        var bedrift = new Bedrift
-        {
-            Organisasjonsnummer = "123456789",
-            Navn = "TestBedrift",
-            KategoriId = kategori.Id
-        };
-
-        db.Bedrifter.Add(bedrift);
-        db.SaveChanges();
+        var kategori = SeedKategori(db);
+        var bedrift = SeedBedrift(db, kategori.Id);
 
         await controller.DeleteConfirmed(bedrift.Id);
 
@@ -135,45 +112,23 @@ public class BedriftTest
     }
 
     [Fact]
-    public async Task SearchBedrift()
+    public async Task SearchBedriftTest()
     {
         var db = GetDb();
         var controller = new BedrifterController(db);
 
-        var kategori1 = new Kategori
-        {
-            KategoriNavn = "TestKategori1"
-        };
-        var kategori2 = new Kategori
-        {
-            KategoriNavn = "TestKategori2"
-        };
+        var kategori1 = SeedKategori(db, "TestKategori1");
+        var kategori2 = SeedKategori(db, "TestKategori2");
 
-        db.Kategorier.AddRange(kategori1, kategori2);
-        db.SaveChanges();
+        SeedBedrift(db, kategori1.Id, "111111111", "TestBedrift1");
+        SeedBedrift(db, kategori2.Id, "222222222", "TestBedrift2");
 
-        db.Bedrifter.AddRange(
-            new Bedrift
-            {
-                Organisasjonsnummer = "111111111", 
-                Navn = "TestBedrift1", 
-                KategoriId = kategori1.Id
-            },
-            new Bedrift
-            {
-                Organisasjonsnummer = "222222222", 
-                Navn = "TestBedrift2", 
-                KategoriId = kategori2.Id
-            }
-        );
-        db.SaveChanges();
 
         var result = await controller.Index(kategori1.Id) as ViewResult;
         var model = result?.Model as IEnumerable<Bedrift>;
 
+        Assert.NotNull(model);
         Assert.Single(model);
         Assert.Equal("TestBedrift1", model.First().Navn);
     }
-
-    
 }
