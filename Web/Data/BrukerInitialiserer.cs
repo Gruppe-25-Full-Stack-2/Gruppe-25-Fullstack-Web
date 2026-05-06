@@ -3,11 +3,26 @@ using Microsoft.EntityFrameworkCore;
 
 namespace TSD2491Gruppe25.Web.Data;
 
+/// <summary>
+/// Legger til en bruker i databasen, slik at en bruker er tilgjengelig fra første start. Innloggingsinformasjon dokumenteres i README.md
+/// </summary>
 public static class BrukerInitialiserer
 {
+    /// <summary>
+    /// Standard innloggingsnavn
+    /// </summary>
     public const string DefaultEmail = "admin@usn.no";
+    /// <summary>
+    /// Passord for standardbruker
+    /// </summary>
     public const string DefaultPassword = "Admin123!";
 
+    /// <summary>
+    /// Kjører og oppretter standardbruker hvis den ikke finnes fra før.
+    /// Metoden kan kjøres ved hver oppstart.
+    /// </summary>
+    /// <param name="services">Henter brukere fra database</param>
+    /// <returns>Fullfører når migrasjon er ferdig og eventuelt standardbruker er lagt til.</returns>
     public static async Task SeedAsync(IServiceProvider services)
     {
         using var scope = services.CreateScope();
