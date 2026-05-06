@@ -8,34 +8,32 @@
 
 <h1 class="text-2xl font-bold mb-4">Slett kategori</h1>
 
-@{
-    var antall = Model.Bedrifter?.Count() ?? 0;
-}
 
-@if(antall == 0)
+@if(Model.Bedrifter is null || !Model.Bedrifter.Any())
 {
     <h3 class="text-lg font-medium">Er du sikker på at du vil slette denne kategorien?</h3>
 }
-else if(antall > 10) 
+else if(Model.Bedrifter.Count() > 10) 
 {
     <h3 class="text-red-600 font-bold text-lg">
         Er du sikker på at du vil slette kategorien 
         <span class="underline">@Model.KategoriNavn</span>?
     </h3>
     <p class="mt-2 text-red-500 font-semibold">
-        Denne kategorien inneholde @antall bedrifter.
+        Denne kategorien inneholde @Model.Bedrifter.Count bedrifter.
     </p>
 }
 else 
 {
+    var bedrifter = Model.Bedrifter ?? new List<Bedrift>();
     <h3 class="text-red-600 font-bold text-lg">
-    Er du sikker på at du vil slette kategorien 
-    <span class="underline">@Model.KategoriNavn</span>
-    med tilhørende bedrifter?
+        Er du sikker på at du vil slette kategorien 
+        <span class="underline">@Model.KategoriNavn</span>
+        med tilhørende bedrifter?
     </h3>
     <p class="mt-2">Denne kategorien inneholder følgende bedrifter:</p>
     <ul class="list-disc ml-6 mt-1">
-        @foreach (var b in Model.Bedrifter)
+        @foreach (var b in bedrifter)
         {
             <li>@b.Navn</li>
         }
