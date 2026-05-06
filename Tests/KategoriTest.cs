@@ -17,16 +17,21 @@ public class KategoriTest
         return new ApplicationDbContext(options);
     }
 
+    private static Kategori SeedKategori(ApplicationDbContext db, string navn = "TestKategori")
+    {
+        var kategori = new Kategori { KategoriNavn = navn };
+        db.Kategorier.Add(kategori);
+        db.SaveChanges();
+        return kategori;
+    }
+
     [Fact]
     public async Task CreateKategoriTest()
     {
         var db = GetDb();
         var controller = new KategorierController(db);
 
-        var kategori = new Kategori
-        {
-            KategoriNavn="TestKategori"
-        };
+        var kategori = new Kategori{ KategoriNavn = "TestKategori" };
 
         var resultat = await controller.Create(kategori);
 
@@ -43,13 +48,7 @@ public class KategoriTest
         var db = GetDb();
         var controller = new KategorierController(db);
 
-        var kategori = new Kategori
-        {
-            KategoriNavn="TestKategori"
-        };
-
-        db.Kategorier.Add(kategori);
-        db.SaveChanges();
+        var kategori = SeedKategori(db);
 
         kategori.KategoriNavn = "OppdatertKategori";
 
@@ -67,13 +66,7 @@ public class KategoriTest
         var db = GetDb();
         var controller = new KategorierController(db);
 
-        var kategori = new Kategori
-        {
-            KategoriNavn="TestKategori"
-        };
-
-        db.Kategorier.Add(kategori);
-        db.SaveChanges();
+        var kategori = SeedKategori(db);
 
         var result = await controller.Details(kategori.Id) as ViewResult;
     
@@ -90,13 +83,7 @@ public class KategoriTest
         var db = GetDb();
         var controller = new KategorierController(db);
 
-        var kategori = new Kategori
-        {
-            KategoriNavn="TestKategori"
-        };
-
-        db.Kategorier.Add(kategori);
-        db.SaveChanges();
+        var kategori = SeedKategori(db);
 
         var result = await controller.DeleteConfirmed(kategori.Id);
 
