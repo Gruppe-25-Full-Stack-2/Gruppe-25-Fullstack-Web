@@ -11,16 +11,28 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace TSD2491Gruppe25.Web.Controllers
 {
+    /// <summary>
+    /// Controller som håndterer CRUD-operasjoner for Kategori.
+    /// Inkluderer opprettelse, redigering, detaljer og sletting av kategorier.
+    /// </summary>
     public class KategorierController : Controller
     {
         private readonly ApplicationDbContext _context;
 
+        /// <summary>
+        /// Initialiserer KategoriController med databasekontekst.
+        /// </summary>
+        /// <param name="context">ApplicationDbContext brukes for databaseoperasjoner.</param>
         public KategorierController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Kategorier
+        /// <summary>
+        /// Henter alle kategorier fra databasen, inkludert relaterte bedrifter.
+        /// [AllowAnonymous] gjør at denne handlingen kan brukes uten at brukeren er innlogget.
+        /// </summary>
+        /// <returns>Liste over kategorier</returns>
         [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
@@ -28,7 +40,12 @@ namespace TSD2491Gruppe25.Web.Controllers
             return View(kategorier);
         }
 
-        // GET: Kategorier/Details/5
+        /// <summary>
+        /// Henter detaljer for en kategori basert på ID.
+        /// Inkluderer relaterte bedrifter.
+        /// </summary>
+        /// <param name="id">ID til kategorien</param>
+        /// <returns>Returnerer View med kategori dersom det finnes, ellers returneres NotFound.</returns>
         [AllowAnonymous]
         public async Task<IActionResult> Details(int? id)
         {
@@ -48,16 +65,21 @@ namespace TSD2491Gruppe25.Web.Controllers
             return View(kategori);
         }
 
-        // GET: Kategorier/Create
+        /// <summary>
+        /// Viser skjema for opprettelse av ny kategori.
+        /// </summary>
+        /// <returns>Creste-view med tomt skjema.</returns>
         [AllowAnonymous]
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Kategorier/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// Oppretter ny kategori i databasen.
+        /// </summary>
+        /// <param name="kategori">Kategoriobjekt som inneholder data fra skjemaet (Id, Kategorinavn).</param>
+        /// <returns>Redirecter til Index ved vellykket lagring, ellers returnes til Create-viewet.</returns>
         [AllowAnonymous]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -72,7 +94,12 @@ namespace TSD2491Gruppe25.Web.Controllers
             return View(kategori);
         }
 
-        // GET: Kategorier/Edit/5
+        /// <summary>
+        /// Viser redigeringsskjemaet for en kategori. 
+        /// Brukeren må være innlogget for å kunne gjennomføre operasjonen.
+        /// </summary>
+        /// <param name="id">ID til kategorien som skal redigeres.</param>
+        /// <returns>Returnerer Edit-view med kategori-data dersom den finnes, ellers returneres NotFound.</returns>
         [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -89,9 +116,17 @@ namespace TSD2491Gruppe25.Web.Controllers
             return View(kategori);
         }
 
-        // POST: Kategorier/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// Oppdaterer eksisterende kategori i databasen basert på innsendte verdier. 
+        ///  Brukeren må være innlogget for å kunne gjennomføre operasjonen.
+        /// </summary>
+        /// <param name="id">ID til kategorien som skal oppdateres.</param>
+        /// <param name="kategori">Kategori-objektet med oppdaterte verdier.</param>
+        /// <returns>
+        /// Redirecter til Index ved vellykket oppdatering.
+        /// Returnerer til view dersom vaildering feiler.
+        /// Returnerer NotFound dersom ID-en ikke stemmer.
+        /// </returns>
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -125,7 +160,12 @@ namespace TSD2491Gruppe25.Web.Controllers
             return View(kategori);
         }
 
-        // GET: Kategorier/Delete/5
+        /// <summary>
+        /// Viser en beskreftelsesside før sletting av en kategori.
+        /// Brukeren må være innlogget for å kunne gjennomføre operasjonen.
+        /// </summary>
+        /// <param name="id">ID til kategorien som skal slettes.</param>
+        /// <returns>Returnerer Delete-View med kategori-data dersom den finnes, eller returneres NotFound.</returns>
         [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
@@ -145,7 +185,12 @@ namespace TSD2491Gruppe25.Web.Controllers
             return View(kategori);
         }
 
-        // POST: Kategorier/Delete/5
+        /// <summary>
+        /// Sletter kategorien fra databasen basert på ID. 
+        /// Brukeren må være innlogget for å kunne gjennomføre operasjonen.
+        /// </summary>
+        /// <param name="id">ID til kategorien som skal slettes.</param>
+        /// <returns>Redirecter til Index etter vellykket sletting.</returns>
         [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -161,6 +206,11 @@ namespace TSD2491Gruppe25.Web.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        /// <summary>
+        /// Sjekker om en kategori finnes i databsen basert på ID.
+        /// </summary>
+        /// <param name="id">ID til kategorien som sakl sjekkes.</param>
+        /// <returns>True dersom kategorien finnes i databasen, ellers false.</returns>
         private bool KategoriExists(int id)
         {
             return _context.Kategorier.Any(e => e.Id == id);
