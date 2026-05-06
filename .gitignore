@@ -7,7 +7,7 @@
 .env
 
 # database-filer
-*.db
+*.db*
 
 # User-specific files
 *.rsuser
@@ -483,3 +483,11 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
+wwwroot/css/tailwind.css
+
+# DocFX
+Docs/_site/
+Docs/api/*.yml
+Docs/api/*.manifest
+Docs/obj/
+

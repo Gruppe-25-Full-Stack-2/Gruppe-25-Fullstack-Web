@@ -1,0 +1,26 @@
+{
+  "name": "gruppe-25-fullstack-web",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:css": "npx @tailwindcss/cli -i ./wwwroot/css/tailwind-input.css -o ./wwwroot/css/tailwind.css",
+    "watch:css": "npx @tailwindcss/cli -i ./wwwroot/css/tailwind-input.css -o ./wwwroot/css/tailwind.css --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Gruppe-25-Full-Stack-2/Gruppe-25-Fullstack-Web.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Gruppe-25-Full-Stack-2/Gruppe-25-Fullstack-Web/issues"
+  },
+  "homepage": "https://github.com/Gruppe-25-Full-Stack-2/Gruppe-25-Fullstack-Web#readme",
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.2.4",
+    "tailwindcss": "^4.2.4"
+  }
+}

@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - TSD2491Gruppe25.Web</title>
+
+    <script type="importmap"></script>
+    <link rel="stylesheet" href="~/css/tailwind.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/TSD2491Gruppe25.Web.styles.css" asp-append-version="true" />
+</head>
+<body class="bg-gray-100 text-gray-900">
+    <header>
+        <nav class="bg-white text-black shadow">
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="flex items-center justify-between h-16">
+                    
+                    <div class="flex items-center space-x-12">
+                        <a asp-area="" asp-controller="Home" asp-action="Index" class="text-xl font-semibold hover:text-gray-600">TSD2491Gruppe25.Web</a>
+
+                        <div class="flex items-center space-x-10">
+                            <a asp-controller="Home" asp-action="Index" class="hover:text-gray-900">Hjem</a>
+                            <a asp-controller="Kategorier" asp-action="Index" class="hover:text-gray-900">Kategorier</a>
+                            <a asp-controller="Bedrifter" asp-action="Index" class="hover:text-gray-900">Bedrifter</a>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center">
+                        <partial name="_LoginPartial" />
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="max-w-7xl mx-auto px-4 py-6">
+        <main role="main">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="bg-gray-800 text-gray-300 py-4 mt-10">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            &copy; 2026 - TSD2491Gruppe25.Web
+        </div>
+    </footer>
+
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script> 
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

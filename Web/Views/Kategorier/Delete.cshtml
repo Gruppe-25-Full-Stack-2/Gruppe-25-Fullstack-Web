@@ -1,0 +1,57 @@
+@using Microsoft.CodeAnalysis.CSharp.Syntax
+@model TSD2491Gruppe25.Web.Models.Kategori
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+
+<h1 class="text-2xl font-bold mb-4">Slett kategori</h1>
+
+
+@if(Model.Bedrifter is null || !Model.Bedrifter.Any())
+{
+    <h3 class="text-lg font-medium">Er du sikker på at du vil slette denne kategorien?</h3>
+}
+else if(Model.Bedrifter.Count() > 10) 
+{
+    <h3 class="text-red-600 font-bold text-lg">
+        Er du sikker på at du vil slette kategorien 
+        <span class="underline">@Model.KategoriNavn</span>?
+    </h3>
+    <p class="mt-2 text-red-500 font-semibold">
+        Denne kategorien inneholde @Model.Bedrifter.Count bedrifter.
+    </p>
+}
+else 
+{
+    var bedrifter = Model.Bedrifter ?? new List<Bedrift>();
+    <h3 class="text-red-600 font-bold text-lg">
+        Er du sikker på at du vil slette kategorien 
+        <span class="underline">@Model.KategoriNavn</span>
+        med tilhørende bedrifter?
+    </h3>
+    <p class="mt-2">Denne kategorien inneholder følgende bedrifter:</p>
+    <ul class="list-disc ml-6 mt-1">
+        @foreach (var b in bedrifter)
+        {
+            <li>@b.Navn</li>
+        }
+    </ul>
+}
+
+
+<div class="mt-6">
+    <hr class="mb-4" />
+
+    <dl class="grid grid-cols-2 gap-4 mb-6">
+        <dt class = "font-semibold">Kategori</dt>
+       <dd>@Html.DisplayFor(model => model.KategoriNavn)</dd>
+    </dl>
+    
+    <form asp-action="Delete" class="flex gap-3">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Slett" class="bg-red-600 hover:bg-red-700 text-white font-medium px-4 py-2 rounded cursor-pointer" /> 
+        <a asp-action="Index" class="bg-gray-600 hover:bg-gray-700 text-white font-medium px-4 py-2 rounded">Tilbake til listen</a>
+    </form>
+</div>
