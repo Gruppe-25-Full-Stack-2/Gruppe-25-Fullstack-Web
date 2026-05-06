@@ -5,11 +5,12 @@
       <Nullable>enable</Nullable>
       <ImplicitUsings>enable</ImplicitUsings>
       <UserSecretsId>aspnet-TSD2491Gruppe25.Web-1308f5b8-fc2f-45ae-9606-61012b9b9630</UserSecretsId>
+      <GenerateDocumentationFile>true</GenerateDocumentationFile>
+      <NoWarn>1591</NoWarn>
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="10.0.2"
-   />
+      <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="10.0.2" />
       <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="10.0.2" />
       <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="10.0.2" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.2">
@@ -26,8 +27,7 @@
     </ItemGroup>
 
     <Target Name="BuildTailwind" BeforeTargets="Build">
-      <Exec Command="npm install" Condition="!Exists('node_modules')" ContinueOnError="WarnAndContinue"
-   />
+      <Exec Command="npm install" Condition="!Exists('node_modules')" ContinueOnError="WarnAndContinue" />
       <Exec Command="npm run build:css" ContinueOnError="WarnAndContinue" />
     </Target>
   </Project>
