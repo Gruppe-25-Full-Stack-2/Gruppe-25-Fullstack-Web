@@ -3,8 +3,10 @@ using TSD2491Gruppe25.Web.Controllers;
 using TSD2491Gruppe25.Web.Data;
 using TSD2491Gruppe25.Web.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.Sqlite;
 
 namespace TSD2491Gruppe25.Web.Tests;
+
 
 public class BedriftTest
 {
@@ -46,7 +48,7 @@ public class BedriftTest
     [Fact]
     public async Task CreateBedriftTest()
     {
-        var db = GetDb();
+        await using var db = GetDb();
         var controller = new BedrifterController(db);
         var kategori = SeedKategori(db);
 
@@ -61,15 +63,18 @@ public class BedriftTest
             KategoriId = kategori.Id
         };
 
-        await controller.Create(bedrift);
+        var result = await controller.Create(bedrift);
 
         Assert.Equal(1, db.Bedrifter.Count());
+
+        var redirect = Assert.IsType<RedirectToActionResult>(result);
+        Assert.Equal("Index", redirect.ActionName);
     }
 
     [Fact]
     public async Task EditBedriftTest()
     {
-        var db = GetDb();
+        await using var db = GetDb();
         var controller = new BedrifterController(db);
 
         var kategori = SeedKategori(db);
@@ -85,7 +90,7 @@ public class BedriftTest
     [Fact]
     public async Task DetailsBedriftTest()
     {
-        var db = GetDb();
+        await using var db = GetDb();
         var controller = new BedrifterController(db);
 
         var kategori = SeedKategori(db);
@@ -94,13 +99,17 @@ public class BedriftTest
         var result = await controller.Details(bedrift.Id) as ViewResult;
 
         Assert.NotNull(result);
-        Assert.IsType<Bedrift>(result.Model);
+
+        var model = Assert.IsType<Bedrift>(result.Model);
+        Assert.Equal(bedrift.Id, model.Id);
+        Assert.Equal("TestBedrift", model.Navn);
+
     }
 
     [Fact]
     public async Task DeleteBedriftTest()
     {
-        var db = GetDb();
+        await using var db = GetDb();
         var controller = new BedrifterController(db);
 
         var kategori = SeedKategori(db);
@@ -114,7 +123,7 @@ public class BedriftTest
     [Fact]
     public async Task SearchBedriftTest()
     {
-        var db = GetDb();
+        await using var db = GetDb();
         var controller = new BedrifterController(db);
 
         var kategori1 = SeedKategori(db, "TestKategori1");
@@ -130,5 +139,48 @@ public class BedriftTest
         Assert.NotNull(model);
         Assert.Single(model);
         Assert.Equal("TestBedrift1", model.First().Navn);
+    }
+
+    [Fact]
+    public async Task CreateBedriftMedDuplikatOrganisasjonsnummerSkalFeile()
+    {
+        await using var connection = new SqliteConnection("DataSource=:memory:");
+        await connection.OpenAsync();
+
+        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+            .UseSqlite(connection)
+            .Options;
+
+        await using var db = new ApplicationDbContext(options);
+        await db.Database.EnsureCreatedAsync();
+
+        var kategori = new Kategori
+        {
+            KategoriNavn = "TestKategori"
+        };
+
+        db.Kategorier.Add(kategori);
+        await db.SaveChangesAsync();
+
+        var bedrift1 = new Bedrift
+        {
+            Organisasjonsnummer = "123456789",
+            Navn = "Første bedrift",
+            KategoriId = kategori.Id
+        };
+
+        var bedrift2 = new Bedrift
+        {
+            Organisasjonsnummer = "123456789",
+            Navn = "Andre bedrift",
+            KategoriId = kategori.Id
+        };
+
+        db.Bedrifter.Add(bedrift1);
+        await db.SaveChangesAsync();
+
+        db.Bedrifter.Add(bedrift2);
+
+        await Assert.ThrowsAsync<DbUpdateException>(() => db.SaveChangesAsync());
     }
 }
